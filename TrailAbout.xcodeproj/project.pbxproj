@@ -19,6 +19,9 @@
 		FA7D89792C7BA95600C88623 /* LocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7D89782C7BA95600C88623 /* LocationsView.swift */; };
 		FA7D897B2C7BAD7E00C88623 /* LocationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7D897A2C7BAD7E00C88623 /* LocationsViewModel.swift */; };
 		FA7D897F2C7D804B00C88623 /* LocationsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7D897E2C7D804B00C88623 /* LocationsListView.swift */; };
+		FA7D89812C7FE9C800C88623 /* LocationsPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7D89802C7FE9C800C88623 /* LocationsPreviewView.swift */; };
+		FA7D89832C80072B00C88623 /* LocationMapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7D89822C80072B00C88623 /* LocationMapAnnotationView.swift */; };
+		FA7D89852C81546F00C88623 /* LocationsDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7D89842C81546F00C88623 /* LocationsDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,9 @@
 		FA7D89782C7BA95600C88623 /* LocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsView.swift; sourceTree = "<group>"; };
 		FA7D897A2C7BAD7E00C88623 /* LocationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewModel.swift; sourceTree = "<group>"; };
 		FA7D897E2C7D804B00C88623 /* LocationsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsListView.swift; sourceTree = "<group>"; };
+		FA7D89802C7FE9C800C88623 /* LocationsPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsPreviewView.swift; sourceTree = "<group>"; };
+		FA7D89822C80072B00C88623 /* LocationMapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapAnnotationView.swift; sourceTree = "<group>"; };
+		FA7D89842C81546F00C88623 /* LocationsDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +161,9 @@
 			isa = PBXGroup;
 			children = (
 				FA7D89782C7BA95600C88623 /* LocationsView.swift */,
+				FA7D89842C81546F00C88623 /* LocationsDetailsView.swift */,
+				FA7D89822C80072B00C88623 /* LocationMapAnnotationView.swift */,
+				FA7D89802C7FE9C800C88623 /* LocationsPreviewView.swift */,
 				FA7D897E2C7D804B00C88623 /* LocationsListView.swift */,
 			);
 			path = Views;
@@ -306,12 +315,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA7D89852C81546F00C88623 /* LocationsDetailsView.swift in Sources */,
 				FA7D89772C7BA48600C88623 /* LocationsDataService.swift in Sources */,
+				FA7D89832C80072B00C88623 /* LocationMapAnnotationView.swift in Sources */,
 				FA7D897F2C7D804B00C88623 /* LocationsListView.swift in Sources */,
 				FA7D897B2C7BAD7E00C88623 /* LocationsViewModel.swift in Sources */,
 				FA7D89462C7B8A3700C88623 /* ContentView.swift in Sources */,
 				FA7D89792C7BA95600C88623 /* LocationsView.swift in Sources */,
 				FA7D89742C7BA19E00C88623 /* Location.swift in Sources */,
+				FA7D89812C7FE9C800C88623 /* LocationsPreviewView.swift in Sources */,
 				FA7D89442C7B8A3700C88623 /* TrailAboutApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,6 +488,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Trail About ";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -514,6 +527,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Trail About ";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

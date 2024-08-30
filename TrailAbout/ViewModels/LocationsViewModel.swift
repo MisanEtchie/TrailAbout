@@ -25,11 +25,19 @@ class LocationsViewModel: ObservableObject {
     
     @Published var showLocationsList: Bool = false
     
+    @Published var sheetLocation: Location? = nil
+    
+    @Published var zoomLevelForDisplay: Double = 0.0
+    
+    private var previousZoomLevel: Double = 0.0
+    private var zoomChangeTimer: Timer?
+    
     init() {
         let locations = LocationsDataService.locations
         self.locations = locations
         self.mapLocation = locations.first!
         self.updateMapRegion(location: locations.first! )
+        startZoomChangeTimer()
     }
     
     private func updateMapRegion(location: Location) {
@@ -40,6 +48,25 @@ class LocationsViewModel: ObservableObject {
         }
        
     }
+    
+    var zoomLevel: Double {
+            return mapRegion.span.longitudeDelta
+        }
+   
+    func startZoomChangeTimer() {
+           zoomChangeTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+               guard let self = self else { return }
+               if self.previousZoomLevel != self.zoomLevel {
+                   self.previousZoomLevel = self.zoomLevel
+                   zoomLevelForDisplay = zoomLevel//String(format: "Zoom Level: %.2f", zoomLevel)
+                   self.printZoomLevel()
+               }
+           }
+       }
+    
+    func printZoomLevel() {
+            print("Current Zoom Level (latitudeDelta): \(zoomLevel)")
+        }
     
     func toggleLocationsList() {
         withAnimation(.easeInOut) {
@@ -54,4 +81,37 @@ class LocationsViewModel: ObservableObject {
         }
         
     }
+    
+    func nextButtonPressed() {
+        withAnimation(.easeInOut) {
+            
+            guard let currentIndex = locations.firstIndex(where: {$0 == mapLocation}) else {
+                print("could not find index")
+                return
+            }
+            
+            let nextIndex = currentIndex + 1
+            
+            guard locations.indices.contains(nextIndex) else {
+                let firstLocation = locations.first
+                showNextLocation(location: firstLocation!)
+                return
+            }
+            
+            let nextLocation = locations[nextIndex]
+            
+            showNextLocation(location: nextLocation)
+            
+//            let currentIndex = locations.firstIndex{
+//                location in
+//                return location == mapLocation
+//            }
+            
+            
+        }
+    }
+    
+    deinit {
+            zoomChangeTimer?.invalidate()
+        }
 }

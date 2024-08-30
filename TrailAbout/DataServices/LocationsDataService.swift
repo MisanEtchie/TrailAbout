@@ -120,7 +120,47 @@ class LocationsDataService {
                         "paris-louvre-3",
                     ],
                     link: "https://en.wikipedia.org/wiki/Statue_of_Liberty"
-                )
+                ),
+        Location(
+                    name: "Christ the Redeemer",
+                    cityName: "Rio de Janeiro",
+                    region: .southAmerica,
+                    type: .monument,
+                    coordinates: CLLocationCoordinate2D(latitude: -22.9068, longitude: -43.1729),
+                    description: "Christ the Redeemer is a statue of Jesus Christ in Rio de Janeiro, Brazil. It is a symbol of Christianity and one of the New Seven Wonders of the World. The 30-meter-tall statue stands atop the Corcovado Mountain and overlooks the city of Rio de Janeiro.",
+                    imageNames: [
+                        "paris-louvre-1",
+                        "paris-louvre-2",
+                        "paris-louvre-3",
+                    ],
+                    link: "https://en.wikipedia.org/wiki/Christ_the_Redeemer"),
+                Location(
+                    name: "National Museum of Nigeria",
+                    cityName: "Lagos",
+                    region: .westernAfrica,
+                    type: .historicalSite,
+                    coordinates: CLLocationCoordinate2D(latitude: 6.4541, longitude: 3.3942),
+                    description: "The National Museum Lagos is a museum dedicated to Nigerian history and culture. It houses an extensive collection of Nigerian artifacts, including traditional sculptures and historical artifacts.",
+                    imageNames: [
+                        "paris-louvre-1",
+                        "paris-louvre-2",
+                        "paris-louvre-3",
+                    ],
+                    link: "https://en.wikipedia.org/wiki/National_Museum,_Lagos"),
+                Location(
+                    name: "Sydney Opera House",
+                    cityName: "Sydney",
+                    region: .oceania,
+                    type: .monument,
+                    coordinates: CLLocationCoordinate2D(latitude: -33.8568, longitude: 151.2153),
+                    description: "The Sydney Opera House is a multi-venue performing arts center in Sydney, Australia. It is one of the most recognizable and photographed buildings in the world, known for its unique shell-like design and vibrant cultural performances.",
+                    imageNames: [
+                        "paris-louvre-1",
+                        "paris-louvre-2",
+                        "paris-louvre-3",
+                    ],
+                    link: "https://en.wikipedia.org/wiki/Sydney_Opera_House")
+        
     ]
     
 }
