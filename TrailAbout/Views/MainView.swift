@@ -8,8 +8,60 @@
 import SwiftUI
 
 struct MainView: View {
+    @StateObject private var vm = LocationsViewModel()
+    @State private var selectedTab: Tab = .locations
+    
+    enum Tab {
+        case feed
+        case locations
+        case account
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView(selection: $selectedTab) {
+            Text("Feed")
+                .tabItem {
+                    Image(systemName: selectedTab == .feed ? "rectangle.portrait.on.rectangle.portrait.angled.fill" : "rectangle.portrait.on.rectangle.portrait.angled")
+                    //Text("Feed")
+                }
+                .tag(Tab.feed)
+            
+            LocationsView().environmentObject(vm)
+            
+                .tabItem {
+                    Image(systemName: selectedTab == .locations ? "map.fill" : "map")
+                    //Text("Locations")
+                }
+                .tag(Tab.locations)
+            
+            ProfileView()
+                
+                .tabItem {
+                    Image(systemName: selectedTab == .account ? "person.circle.fill" : "person.circle")
+                        
+                    //Text("Account")
+                }
+            
+                .tag(Tab.account)
+        }
+        .accentColor(Color("AccentColor")) // The color for the selected tab
+        .onAppear {
+            UITabBar.appearance().unselectedItemTintColor = UIColor(named: "InverseColor") // Set the color for unselected tabs
+        }
+        //
+        //
+        //
+        /*.onAppear {
+                   let appearance = UITabBarAppearance()
+                   appearance.configureWithOpaqueBackground()
+            
+                   appearance.backgroundColor = UIColor { traitCollection in
+                       traitCollection.userInterfaceStyle == .dark ? .black : .white
+                   }
+                   UITabBar.appearance().standardAppearance = appearance
+                   UITabBar.appearance().scrollEdgeAppearance = appearance
+                   UITabBar.appearance().unselectedItemTintColor = UIColor(named: "accentColor") // Use accentColor for unselected tabs
+               }*/
     }
 }
 

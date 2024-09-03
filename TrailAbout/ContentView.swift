@@ -1,24 +1,25 @@
+////
+////  ContentView.swift
+////  TrailAbout
+////
+////  Created by Misan on 8/25/24.
+////
 //
-//  ContentView.swift
-//  TrailAbout
+//import SwiftUI
 //
-//  Created by Misan on 8/25/24.
+//struct ContentView: View {
+//    @StateObject private var vm = LocationsViewModel()
+//    @AppStorage("log_status") var logStatus: Bool = false
+//    //
+//    var body: some View {
+//        if logStatus {
+//            LocationsView().environmentObject(vm)
+//        } else {
+//            LogInView()
+//        }
+//    }
+//}
 //
-
-import SwiftUI
-
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
-
-#Preview {
-    ContentView()
-}
+//#Preview {
+//    ContentView()
+//}

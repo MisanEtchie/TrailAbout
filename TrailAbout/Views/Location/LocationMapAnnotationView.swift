@@ -43,7 +43,7 @@ struct LocationMapAnnotationView: View {
                 .foregroundColor(accentColor)
                 .frame(width: 10, height: 10)
                 .rotationEffect(Angle(degrees: 180))
-                .offset(y: -4)
+                .offset(y: -3)
                 .padding(.bottom, 70)
                 
                 

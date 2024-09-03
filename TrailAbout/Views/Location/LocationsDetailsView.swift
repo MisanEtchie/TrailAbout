@@ -92,10 +92,28 @@ extension LocationsDetailsView {
             Text(location.description)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
+                .padding(.bottom, 16)
             
             if let url = URL(string: location.link) {
-                Link("Read more...", destination: url).font(.headline)
-                .tint(.blue)}
+                
+                Link(destination: url) {
+                               HStack {
+                                   Image(systemName: "arrow.up.forward.app")
+                                       .font(.headline)
+                                       .foregroundColor(.blue)
+                                   Text("Read more...")
+                                       .font(.headline)
+                                       .foregroundColor(.blue)
+                               }
+                               .padding(.vertical, 6)
+                               .padding(.horizontal, 16)
+                               
+                               .background(Color.blue.opacity(0.2))
+                               .cornerRadius(26)
+                           }
+                
+                
+            }
             
         }
         
