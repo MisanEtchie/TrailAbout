@@ -6,13 +6,44 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
-struct Post: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+enum LocationStatus: String, Codable {
+        case visited
+        case wantsToGo
+    }
+
+struct Post: Identifiable, Codable {
+    @DocumentID var id: String?
+    var text: String
+    var imageURL: URL?
+    var imageReferenceID: String
+    var publsihedDate: Date = Date()
+    var likedIDs: [String] = []
+    var locationStatus: LocationStatus
+    //
+    var username: String
+    var userUID: String
+    var userProfileURL: URL
+    //
+    var locationName: String
+    var locationCity: String
+    
+    
+    enum CodingKeys: CodingKey {
+        case id
+        case text
+        case imageURL
+        case imageReferenceID
+        case publsihedDate
+        case likedIDs
+        case locationStatus
+        case username
+        case userUID
+        case userProfileURL
+        case locationName
+        case locationCity
     }
 }
 
-#Preview {
-    Post()
-}
+
