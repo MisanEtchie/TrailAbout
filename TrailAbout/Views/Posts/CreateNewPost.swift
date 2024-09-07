@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 import Firebase
 import FirebaseStorage
+import FirebaseFirestore 
 
 struct CreateNewPost: View {
     var onPost: (Post) -> ()
@@ -34,9 +35,9 @@ struct CreateNewPost: View {
     @FocusState private var showKeyboard: Bool
     
     var body: some View {
-        VStack {
+        //VStack {
             
-            VStack {
+        VStack (spacing: 0){
                 HStack {
                     Menu {
                         
@@ -81,27 +82,15 @@ struct CreateNewPost: View {
                     
                     addPostBody
                     
+                    
+                    
                 }
                 
                 Divider()
                 
                 HStack {
-                    Button {
-                        showImagePicker.toggle()
-                    } label : {
-                        HStack {
-                            Image(systemName: "photo.on.rectangle.angled")
-                                .font(.title3)
-                            
-                            Text("Post a picture of your trip")
-                        }
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 18)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(20)
-                        
-                        //.foregroundColor(.black)
-                    }.hAlign(.leading)
+                    
+                    Spacer()
                     
                     Button("Done") {
                         showKeyboard = false
@@ -112,7 +101,7 @@ struct CreateNewPost: View {
                 .padding(15)
             }
             
-        }
+        //}
         .vAlign(.top)
         .photosPicker(isPresented: $showImagePicker , selection: $photoItem)
         .onChange(of: photoItem) { newValue in
@@ -140,6 +129,9 @@ struct CreateNewPost: View {
             }
         }
         .alert(errorMessage, isPresented: $showError, actions: {})
+        .overlay {
+            LoadingView(show: $isLoading)
+        }
     }
     
     func createPost () {
@@ -148,11 +140,42 @@ struct CreateNewPost: View {
         
         Task {
             do {
+                guard let profileURL = profileURL else {return}
+                
+                let imageReferenceID = "\(userUID)\(Date())"
+                
+                let storageRef = Storage.storage().reference().child("Post_Images").child(imageReferenceID)
+                
+                if let postImageData {
+                    let _ = try await storageRef.putDataAsync(postImageData)
+                    let downloadURL = try await storageRef.downloadURL()
+                    
+                    let post = Post(text: postText, imageURL: downloadURL, imageReferenceID: imageReferenceID, locationStatus: selectedStatus, username: userNameStored, userUID: userUID, userProfileURL: profileURL, locationName: location.name, locationCity: location.cityName)
+                    
+                    try await createDocumentAtFirebase(post)
+                    
+                } else {
+                    let post = Post(text: postText, locationStatus: selectedStatus, username:  userNameStored, userUID: userUID, userProfileURL: profileURL, locationName: location.name, locationCity: location.cityName)
+                    
+                    try await createDocumentAtFirebase(post )
+                }
                 
             } catch {
-                
+                await setError(error)
             }
         }
+    }
+    
+    func createDocumentAtFirebase (_ post : Post) async throws {
+        let _ = try Firestore.firestore().collection("Posts").addDocument(from: post, completion: {error in
+            if error == nil {
+                isLoading = false
+                onPost(post)
+                dismiss()
+            } else {
+                 
+            }
+        })
     }
     
     func setError(_ error: Error) async {
@@ -219,6 +242,32 @@ extension CreateNewPost {
                     .background(Color.gray.opacity(0.1))
                     .cornerRadius(25)
                 
+                
+                if  selectedStatus == .visited && postImageData == nil {
+                    
+                    Button {
+                        showImagePicker.toggle()
+                    } label : {
+                        HStack {
+                            Image(systemName: "photo.on.rectangle.angled")
+                                .font(.title3)
+                            
+                            Text("Post a picture of your trip")
+                        }
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 18)
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(20)
+                        
+                        //.foregroundColor(.black)
+                    }.hAlign(.leading)
+                    
+                    
+                } else
+                {
+                    Spacer()
+                }
+                
                 if let postImageData, let image = UIImage(data: postImageData) {
                     GeometryReader{
                         let size = $0.size
@@ -250,8 +299,7 @@ extension CreateNewPost {
                     .frame(height: 200)
                 }
             }
-            .padding(15)
-        
+            .padding(.horizontal, 15)
     }
     
     
@@ -273,13 +321,14 @@ extension CreateNewPost {
                     // "Wants to Go" Button
                     Button(action: {
                         selectedStatus = .wantsToGo
+                        postImageData = nil
                     }) {
                         Text("🧳 Want to Go")
                             .fontWeight(.medium)
                             .padding(12)
                             .frame(maxWidth: .infinity)
                             .background(selectedStatus == .wantsToGo ? Color.blue : Color.gray.opacity(0.2))
-                            .foregroundColor(selectedStatus == .wantsToGo ? .white : .black)
+                            .foregroundColor(selectedStatus == .wantsToGo ? .white : Color("InverseColor"))
                             .cornerRadius(25)
                     }
                 }

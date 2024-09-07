@@ -17,8 +17,8 @@ struct Post: Identifiable, Codable {
     @DocumentID var id: String?
     var text: String
     var imageURL: URL?
-    var imageReferenceID: String
-    var publsihedDate: Date = Date()
+    var imageReferenceID: String?
+    var publishedDate: Date = Date()
     var likedIDs: [String] = []
     var locationStatus: LocationStatus
     //
@@ -35,7 +35,7 @@ struct Post: Identifiable, Codable {
         case text
         case imageURL
         case imageReferenceID
-        case publsihedDate
+        case publishedDate
         case likedIDs
         case locationStatus
         case username

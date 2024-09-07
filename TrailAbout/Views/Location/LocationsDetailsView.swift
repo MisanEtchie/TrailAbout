@@ -33,7 +33,7 @@ struct LocationsDetailsView: View {
                     
                     Divider().padding(.top, 18).padding(.bottom, 12)
                     
-                    
+                    //statusButtons
                     
                     detailsContent
                     
@@ -118,6 +118,37 @@ extension LocationsDetailsView {
         }
         
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var statusButtons: some View {
+        HStack {
+                    // "Visited" Button
+                    Button(action: {
+                        //selectedStatus = .visited
+                    }) {
+                        Text("🤩 Visited")
+                            .fontWeight(.medium)
+                            .padding(.vertical, 12)
+                            .frame(maxWidth: .infinity)
+                            .background(Color("AccentColor"))
+                            .foregroundColor(.white )
+                            .cornerRadius(25)
+                    }
+
+                    // "Wants to Go" Button
+                    Button(action: {
+                       
+                    }) {
+                        Text("🧳 Want to Go")
+                            .fontWeight(.medium)
+                            .padding(12)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .foregroundColor( .white )
+                            .cornerRadius(25)
+                    }
+                }
+        .padding(.horizontal, 15)
     }
     
     private var mapDetail: some View {

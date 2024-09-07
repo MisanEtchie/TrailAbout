@@ -27,6 +27,11 @@ struct LocationsView: View {
         .sheet(item: $vm.sheetLocation) { location in
             LocationsDetailsView(location: location)
         }
+        .sheet(isPresented: $vm.createNewPost) {
+            CreateNewPost(onPost: {post in
+                vm.recentPosts.insert(post, at: 0 )
+            }, location: vm.mapLocation, selectedStatus: vm.status)
+        }
     }
 }
 
@@ -155,6 +160,6 @@ extension LocationsView {
             }
         }
         .background(.appWhite)
-        .cornerRadius(12)
+        .cornerRadius(30)
     }
 }

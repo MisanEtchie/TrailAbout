@@ -19,7 +19,8 @@ struct MainView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            Text("Feed")
+            FeedView()
+                .environmentObject(vm)
                 .tabItem {
                     Image(systemName: selectedTab == .feed ? "rectangle.portrait.on.rectangle.portrait.angled.fill" : "rectangle.portrait.on.rectangle.portrait.angled")
                     //Text("Feed")
@@ -48,20 +49,7 @@ struct MainView: View {
         .onAppear {
             UITabBar.appearance().unselectedItemTintColor = UIColor(named: "InverseColor") // Set the color for unselected tabs
         }
-        //
-        //
-        //
-        /*.onAppear {
-                   let appearance = UITabBarAppearance()
-                   appearance.configureWithOpaqueBackground()
-            
-                   appearance.backgroundColor = UIColor { traitCollection in
-                       traitCollection.userInterfaceStyle == .dark ? .black : .white
-                   }
-                   UITabBar.appearance().standardAppearance = appearance
-                   UITabBar.appearance().scrollEdgeAppearance = appearance
-                   UITabBar.appearance().unselectedItemTintColor = UIColor(named: "accentColor") // Use accentColor for unselected tabs
-               }*/
+       
     }
 }
 

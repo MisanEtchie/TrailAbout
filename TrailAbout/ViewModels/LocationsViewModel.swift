@@ -27,6 +27,12 @@ class LocationsViewModel: ObservableObject {
     
     @Published var sheetLocation: Location? = nil
     
+    @Published var createNewPost: Bool = false
+    
+    @Published var recentPosts: [Post] = []
+    
+    @Published var status: LocationStatus = .wantsToGo
+    
     @Published var zoomLevelForDisplay: Double = 0.0
     
     private var previousZoomLevel: Double = 0.0

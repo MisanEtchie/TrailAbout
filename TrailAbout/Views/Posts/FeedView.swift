@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct FeedView: View {
+   
+    
+    @EnvironmentObject private var vm: LocationsViewModel
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack{
+                ReusablePostView(posts: $vm.recentPosts)
+                
+            }
+            .navigationTitle("Feed")
+        }
+        
     }
 }
 
-#Preview {
-    FeedView()
-}
+//#Preview {
+//    FeedView()
+//}

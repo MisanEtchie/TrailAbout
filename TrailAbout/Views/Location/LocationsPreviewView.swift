@@ -14,31 +14,37 @@ struct LocationsPreviewView: View {
     @EnvironmentObject private var vm: LocationsViewModel
     
     var body: some View {
-        HStack (alignment: .bottom, spacing: 0) {
-            VStack( alignment: .leading, spacing: 16.0) {
+        VStack {
+            HStack (alignment: .bottom, spacing: 0) {
+                VStack( alignment: .leading, spacing: 16.0) {
+                    
+                    previewImage
+                    
+                    previewTitle
+                }
                 
-                previewImage
+                Spacer()
                 
-                previewTitle
-            }
-            
-            Spacer()
-            
-            VStack (spacing: 8) {
+                VStack (spacing: 8) {
 
-                learnMoreButton
-                
-                nextButton
+                    learnMoreButton
+                    
+                    
+                    
+                    //nextButton
 
-            }
-        }.padding(20)
-        
-            .background(
-                RoundedRectangle(cornerRadius: 25)
-                    .fill(.ultraThinMaterial)
-                    .offset(y: 60)
-            )
-            .cornerRadius(25)
+                }
+            }.padding(20)
+            
+                .background(
+                    RoundedRectangle(cornerRadius: 30)
+                        .fill(.ultraThinMaterial)
+                        .offset(y: 60)
+                )
+            .cornerRadius(30)
+            
+            statusButton
+        }
     }
 }
 
@@ -87,11 +93,48 @@ extension LocationsPreviewView  {
         } label: {
             Text("Learn More")
                 .font(.headline)
-                .frame(width: 125, height: 35)
+                .padding(4)
+                .frame(width: 125)
+                
         }
         .buttonStyle(.borderedProminent)
+        .cornerRadius(30)
     }
     
+    private var statusButton: some View {
+        HStack {
+                    // "Visited" Button
+                    Button(action: {
+                        vm.createNewPost = true
+                        vm.status = .visited
+                    }) {
+                        Text("🤩 Visited")
+                            .fontWeight(.medium)
+                            .padding(.vertical, 12)
+                            .frame(maxWidth: .infinity)
+                            //.background(Color("AccentColor"))
+                            .foregroundColor(Color("InverseColor"))
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(25)
+                    }
+
+                    // "Wants to Go" Button
+                    Button(action: {
+                        vm.createNewPost = true
+                        vm.status = .wantsToGo
+                    }) {
+                        Text("🧳 Want to Go")
+                            .fontWeight(.medium)
+                            .padding(12)
+                            .frame(maxWidth: .infinity)
+                            //.background(Color.blue)
+                            .background(.ultraThinMaterial)
+                            .foregroundColor(Color("InverseColor"))
+                            .cornerRadius(25)
+                    }
+                }
+       // .padding(.horizontal, 15)
+    }
     
     private var nextButton: some View {
         Button {
@@ -100,9 +143,11 @@ extension LocationsPreviewView  {
         } label: {
             Text("Next")
                 .font(.headline)
-                .frame(width: 125, height: 35)
+                .padding(4)
+                .frame(width: 125)
         }
         .buttonStyle(.bordered)
+        .cornerRadius(30)
     }
 }
 

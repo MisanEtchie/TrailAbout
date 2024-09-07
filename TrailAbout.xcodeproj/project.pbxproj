@@ -37,6 +37,9 @@
 		FA7D89892C8239C600C88623 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA7D89882C8239C600C88623 /* GoogleService-Info.plist */; };
 		FA7D898C2C823ADC00C88623 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FA7D898B2C823ADC00C88623 /* FirebaseAuth */; };
 		FA7D898E2C823B0800C88623 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7D898D2C823B0800C88623 /* LogInView.swift */; };
+		FADA54FC2C8C011A00247C43 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA54FB2C8C011A00247C43 /* FeedView.swift */; };
+		FADA54FE2C8C013200247C43 /* ReusablePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA54FD2C8C013200247C43 /* ReusablePostView.swift */; };
+		FADA55002C8C0E3700247C43 /* PostCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADA54FF2C8C0E3700247C43 /* PostCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +90,9 @@
 		FA7D89842C81546F00C88623 /* LocationsDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsDetailsView.swift; sourceTree = "<group>"; };
 		FA7D89882C8239C600C88623 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA7D898D2C823B0800C88623 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		FADA54FB2C8C011A00247C43 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		FADA54FD2C8C013200247C43 /* ReusablePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusablePostView.swift; sourceTree = "<group>"; };
+		FADA54FF2C8C0E3700247C43 /* PostCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +152,9 @@
 			isa = PBXGroup;
 			children = (
 				FA335B142C88C95F00F07498 /* CreateNewPost.swift */,
+				FADA54FB2C8C011A00247C43 /* FeedView.swift */,
+				FADA54FD2C8C013200247C43 /* ReusablePostView.swift */,
+				FADA54FF2C8C0E3700247C43 /* PostCardView.swift */,
 			);
 			path = Posts;
 			sourceTree = "<group>";
@@ -420,8 +429,11 @@
 				FA335B052C86332C00F07498 /* MainView.swift in Sources */,
 				FA7D89772C7BA48600C88623 /* LocationsDataService.swift in Sources */,
 				FA7D89832C80072B00C88623 /* LocationMapAnnotationView.swift in Sources */,
+				FADA54FE2C8C013200247C43 /* ReusablePostView.swift in Sources */,
 				FA7D897F2C7D804B00C88623 /* LocationsListView.swift in Sources */,
 				FA7D897B2C7BAD7E00C88623 /* LocationsViewModel.swift in Sources */,
+				FADA54FC2C8C011A00247C43 /* FeedView.swift in Sources */,
+				FADA55002C8C0E3700247C43 /* PostCardView.swift in Sources */,
 				FA335B072C86333F00F07498 /* RegisterView.swift in Sources */,
 				FA7D89462C7B8A3700C88623 /* ContentView.swift in Sources */,
 				FA7D89792C7BA95600C88623 /* LocationsView.swift in Sources */,
