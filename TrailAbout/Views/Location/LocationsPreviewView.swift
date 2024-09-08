@@ -25,13 +25,13 @@ struct LocationsPreviewView: View {
                 
                 Spacer()
                 
-                VStack (spacing: 8) {
+                HStack (spacing: 8) {
 
                     learnMoreButton
                     
                     
                     
-                    //nextButton
+                    nextButton
 
                 }
             }.padding(20)
@@ -92,9 +92,9 @@ extension LocationsPreviewView  {
             vm.sheetLocation = location
         } label: {
             Text("Learn More")
-                .font(.headline)
+                .font(.footnote)
                 .padding(4)
-                .frame(width: 125)
+                .frame(width: 85)
                 
         }
         .buttonStyle(.borderedProminent)
@@ -109,8 +109,9 @@ extension LocationsPreviewView  {
                         vm.status = .visited
                     }) {
                         Text("🤩 Visited")
+                            .font(.footnote)
                             .fontWeight(.medium)
-                            .padding(.vertical, 12)
+                            .padding(.vertical, 8)
                             .frame(maxWidth: .infinity)
                             //.background(Color("AccentColor"))
                             .foregroundColor(Color("InverseColor"))
@@ -124,8 +125,9 @@ extension LocationsPreviewView  {
                         vm.status = .wantsToGo
                     }) {
                         Text("🧳 Want to Go")
+                            .font(.footnote)
                             .fontWeight(.medium)
-                            .padding(12)
+                            .padding(.vertical, 8)
                             .frame(maxWidth: .infinity)
                             //.background(Color.blue)
                             .background(.ultraThinMaterial)
@@ -141,10 +143,11 @@ extension LocationsPreviewView  {
             //LocationsViewModel.showNextLocation(location:  location)
             vm.nextButtonPressed()
         } label: {
-            Text("Next")
-                .font(.headline)
+           
+            Image(systemName: "chevron.right")
+                .font(.footnote)
                 .padding(4)
-                .frame(width: 125)
+                //.frame(width: 125)
         }
         .buttonStyle(.bordered)
         .cornerRadius(30)

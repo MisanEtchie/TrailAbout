@@ -106,7 +106,7 @@ extension LocationsView {
             
             header.padding(.horizontal, 12)
             
-            Text(String(vm.zoomLevelForDisplay))
+            //Text(String(vm.zoomLevelForDisplay))
             
             Spacer()
             
@@ -141,7 +141,7 @@ extension LocationsView {
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
                     .padding(.horizontal, 12)
-                    .padding(.vertical, 16)
+                    .padding(.vertical, 12)
                     .animation(.none, value: vm.mapLocation )
                 //.frame(height: 55)
                     .frame(maxWidth: .infinity)

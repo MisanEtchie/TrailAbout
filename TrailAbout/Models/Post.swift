@@ -13,7 +13,7 @@ enum LocationStatus: String, Codable {
         case wantsToGo
     }
 
-struct Post: Identifiable, Codable {
+struct Post: Identifiable, Codable, Equatable, Hashable {
     @DocumentID var id: String?
     var text: String
     var imageURL: URL?

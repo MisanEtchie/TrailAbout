@@ -20,6 +20,7 @@ struct PostCardView: View {
     var onDelete: () -> ()
     var body: some View {
         HStack (alignment: .top, spacing: 10) {
+            
             WebImage(url: post.userProfileURL)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
@@ -29,17 +30,21 @@ struct PostCardView: View {
             
             
             VStack (alignment: .leading, spacing: 6) {
-                Text(post.username)
-                    .font(.callout)
-                    .fontWeight(.semibold)
                 
-                Text(post.publishedDate.formatted(date: .numeric, time: .shortened))
-                    .font(.caption)
-                    .foregroundColor(.gray)
+                HStack (spacing: 0){
+                    Text("\(post.username) • ")
+                        .font(.callout)
+                        .fontWeight(.semibold)
+                    
+                    Text(post.locationStatus == .visited ? "visited" : "wants to go")
+                        .font(.footnote)
+                    
+                }
                 
-                Text(post.text )
-                    .font(.callout)
-                    .fontWeight(.semibold)
+                locationTag
+               
+                
+                
                 
                 if let postImageURL = post.imageURL {
                     GeometryReader {
@@ -51,21 +56,52 @@ struct PostCardView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
                     }
                     .frame(height: 300)
+                    .padding(.bottom, 4)
                 }
                 
+                    
+                
+                Text(post.text )
+                    .font(.callout)
+                    .fontWeight(.semibold)
+                
+                
                 HStack  {
-                    locationTag
+                    
+                    Text(post.publishedDate.formatted(date: .numeric, time: .shortened))
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    
+                    Spacer()
+                    
                     
                     likedbutton//.hAlign(.trailing)
                         .padding(.vertical, 6)
-                }.hAlign(.trailing)
+                }
+                .hAlign(.trailing)
             }
         }
         .hAlign(.leading)
+        .overlay (alignment: .topTrailing, content:  {
+            if post.userUID == userUID {
+                Menu {
+                    Button("Delete Post", role: .destructive, action: deletePost)
+                    
+                } label : {
+                    Image(systemName: "ellipsis")
+                        .font(.caption)
+                        .rotationEffect(.init(degrees: -90))
+                        .foregroundColor(.black)
+                        .padding(8)
+                        .contentShape(Rectangle())
+                }
+                //.offset(x: 8)
+            }
+        })
         .onAppear {
             if docListener == nil{
                 guard let postID = post.id else {return}
-                docListener = Firestore.firestore().collection("Users").document(postID).addSnapshotListener({snapshot,
+                docListener = Firestore.firestore().collection("Posts").document(postID).addSnapshotListener({snapshot,
                 error in
                     if let snapshot {
                         if snapshot.exists {
@@ -77,6 +113,12 @@ struct PostCardView: View {
                         }
                     }
                 })
+            }
+        }
+        .onDisappear {
+            if let docListener {
+                docListener.remove()
+                self.docListener = nil
             }
         }
     }
@@ -96,9 +138,25 @@ struct PostCardView: View {
             }
         }
     }
+    
+    func deletePost () {
+        Task {
+            do {
+                if post.imageReferenceID != nil {
+                    try await Storage.storage().reference().child("Post_Images").child(post.imageReferenceID!).delete()
+                }
+                guard let postID = post.id else {return}
+                try await Firestore.firestore().collection("Posts").document(postID).delete()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 
 extension PostCardView {
+    
+    
     private var likedbutton: some View {
         
         Button (action: likePost) {
@@ -114,6 +172,7 @@ extension PostCardView {
                 .background(Color.pink.opacity(0.1))
                 .cornerRadius(20)
             }
+        
         
     }
     

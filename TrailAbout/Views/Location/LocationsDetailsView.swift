@@ -14,6 +14,8 @@ struct LocationsDetailsView: View {
     
     @EnvironmentObject private var vm: LocationsViewModel
     
+    @State private var fetchedPosts: [Post] = []
+    
     var body: some View {
         
         ScrollView {
@@ -37,11 +39,21 @@ struct LocationsDetailsView: View {
                     
                     detailsContent
                     
-                        .padding(.bottom, 60)
+                    
                     
                     
                     
                 }.padding()
+                
+                Text("Posts from here")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .hAlign(.leading)
+                    .padding()
+                
+                ReusablePostView(posts: $fetchedPosts, basedOnLocation: true, locationName: location.name, cityName: location.cityName)
+                
+                    .padding(.bottom, 60)
                 
                 
                 

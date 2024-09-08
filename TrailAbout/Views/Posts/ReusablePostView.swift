@@ -12,7 +12,15 @@ import FirebaseFirestore
 
 struct ReusablePostView: View {
     @Binding var posts: [Post]
-    @State var isFetching: Bool = true
+    var basedOnLocation : Bool = false
+    var locationName: String?
+    var cityName: String?
+    
+    var basedOnUUID: Bool = false
+    var uuID: String?
+    
+    @State private var isFetching: Bool = true
+    @State private var paginationDoc: QueryDocumentSnapshot?
     //
     var body: some View {
         ScrollView (.vertical, showsIndicators: false) {
@@ -22,7 +30,12 @@ struct ReusablePostView: View {
                         .padding(.top, 30)
                 } else {
                     if posts.isEmpty {
-                        Text("No posts found")
+                        Text(
+                            basedOnLocation ?
+                            "No posts in this location\n\nBe the first!" : 
+                                basedOnUUID ? "No posts" :
+                                "No posts found"
+                        )
                             .foregroundStyle(.gray)
                     } else {
                         Posts()
@@ -32,8 +45,11 @@ struct ReusablePostView: View {
             .padding(15)
         }
         .refreshable {
+            guard !basedOnLocation else {return}
             isFetching = true
             posts = []
+            //
+            paginationDoc = nil
             await fetchPosts()
         }
         .task {
@@ -47,12 +63,27 @@ struct ReusablePostView: View {
         ForEach(posts) { post in
             PostCardView (post: post) { updatedPost in
                 
-            } onDelete: {
+                if let index = posts.firstIndex(where: { post in
+                    post.id == updatedPost.id
+                }) {
+                    posts[index].likedIDs = updatedPost.likedIDs
+                }
                 
+            } onDelete: {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    posts.removeAll{post.id == $0.id}
+                }
+            }
+            .onAppear {
+                if post.id == posts.last?.id && paginationDoc != nil {
+                    //print("Fetch new posts")
+                    Task {await fetchPosts()}
+                }
             }
             
             Divider()
                 .padding(.horizontal, 15)
+                .padding(.bottom)
 
         }
     }
@@ -60,9 +91,28 @@ struct ReusablePostView: View {
     func fetchPosts() async {
         do {
             var query: Query!
-            query = Firestore.firestore().collection("Posts")
-                .order(by: "publishedDate", descending: true)
-                .limit(to: 20)
+            
+            if let paginationDoc {
+                query = Firestore.firestore().collection("Posts")
+                    .order(by: "publishedDate", descending: true)
+                    .start(afterDocument: paginationDoc)
+                    .limit(to: 5)
+            } else {
+                query = Firestore.firestore().collection("Posts")
+                    .order(by: "publishedDate", descending: true)
+                    .limit(to: 5)
+            }
+            
+            if basedOnLocation {
+                query = query
+                    .whereField("locationName", isEqualTo: locationName)
+            }
+            
+            if basedOnUUID {
+                query = query
+                    .whereField("userUID", isEqualTo: uuID)
+            }
+            
             
             let docs = try await query.getDocuments()
             
@@ -70,7 +120,8 @@ struct ReusablePostView: View {
                 try? doc.data(as: Post.self)
             }
             await MainActor.run(body: {
-                posts = fetchedPosts
+                posts.append(contentsOf: fetchedPosts )
+                paginationDoc = docs.documents.last
                 isFetching = false
             })
         } catch {
