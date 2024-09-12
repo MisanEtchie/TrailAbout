@@ -7,6 +7,8 @@
 
 import SwiftUI
 import MapKit
+import SwiftUI
+import FirebaseFirestore
 
 class LocationsViewModel: ObservableObject {
     
@@ -35,21 +37,98 @@ class LocationsViewModel: ObservableObject {
     
     @Published var zoomLevelForDisplay: Double = 0.0
     
+    private var xyz: [Location] = []
+    
     private var previousZoomLevel: Double = 0.0
     private var zoomChangeTimer: Timer?
     
     init() {
-        let locations = LocationsDataService.locations
-        self.locations = locations
-        self.mapLocation = locations.first!
-        self.updateMapRegion(location: locations.first! )
-        startZoomChangeTimer()
+       // await fetchLocations()
+        self.locations = []
+            self.mapLocation = Location(
+                name: "Colosseum",
+                cityName: "Rome",
+                region: ".southernEurope",
+                type: ".monument",
+                latitude: 41.8902, longitude: 12.4922,
+                description: "The Colosseum is an oval amphitheatre in the centre of the city of Rome, Italy, just east of the Roman Forum. It is the largest ancient amphitheatre ever built, and is still the largest standing amphitheatre in the world today, despite its age.",
+                imageNames: [
+                    "rome-colosseum-1",
+                    "rome-colosseum-2",
+                    "rome-colosseum-3",
+                ],
+                link: "https://en.wikipedia.org/wiki/Colosseum") // Provide a default location to avoid crashes
+            self.updateMapRegion(location: mapLocation)
+            startZoomChangeTimer()
+            
+            // Fetch the locations asynchronously
+            Task {
+                await fetchLocations()
+            }
     }
+    
+    func fetchLocations() async {
+        do {
+            var query: Query!
+            query = Firestore.firestore().collection("Locations")
+            
+            
+            // Fetch the documents
+            let docs = try await query.getDocuments()
+            
+            // Attempt to convert documents to Location instances
+            let fetchedLocations = docs.documents.compactMap { doc -> Location? in
+                        do {
+                            return try doc.data(as: Location.self)
+                        } catch {
+                            print("Error decoding document")
+                            return nil
+                        }
+                    }
+            
+//            for document in docs.documents {
+//                        // Print the entire document
+//                        print("Document data: \(document.data())")
+//                        
+//                        // If you want to print specific fields, you can access them like this:
+//                        if let name = document.data()["name"] as? String,
+//                           let cityName = document.data()["cityName"] as? String {
+//                            print("Location Name: \(name), City: \(cityName)")
+//                        }
+//                    }
+            
+            // Debugging: Print how many locations were fetched
+            print("Fetched \(fetchedLocations.count) locations.")
+            
+            if fetchedLocations.isEmpty {
+                print("No locations found.")
+            } else {
+                print("Locations fetched: \(fetchedLocations)")
+            }
+            
+            let shuffledLocations = fetchedLocations.shuffled()
+
+            // Ensure the UI is updated on the main thread
+            await MainActor.run {
+                self.xyz = shuffledLocations
+                if let firstLocation = xyz.first {
+                    self.locations = xyz
+                    self.mapLocation = firstLocation
+                    self.updateMapRegion(location: firstLocation)
+                }
+            }
+        } catch {
+            // Print the error if fetching fails
+            print("Error fetching locations: \(error.localizedDescription)")
+        }
+    }
+
+
     
     private func updateMapRegion(location: Location) {
         withAnimation(.easeInOut) {
             mapRegion = MKCoordinateRegion(
-                center: location.coordinates, span: mapSpan
+                center: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), span: mapSpan
             )
         }
        

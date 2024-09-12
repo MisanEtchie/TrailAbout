@@ -44,13 +44,13 @@ extension LocationsListView {
                 Image(imageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 45, height: 45)
-                    .cornerRadius(10)
+                    .frame(width: 30, height: 30)
+                    .cornerRadius(7)
             }
             
             VStack (alignment: .leading) {
-                Text(location.name).font(.headline)
-                Text(location.cityName).font(.subheadline)
+                Text(location.name).font(.footnote)
+                Text(location.cityName).font(.caption2)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
                 //.background(Color.red)

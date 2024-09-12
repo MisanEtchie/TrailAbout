@@ -16,7 +16,7 @@ struct LocationsPreviewView: View {
     var body: some View {
         VStack {
             HStack (alignment: .bottom, spacing: 0) {
-                VStack( alignment: .leading, spacing: 16.0) {
+                VStack( alignment: .leading, spacing: 12.0) {
                     
                     previewImage
                     
@@ -60,14 +60,14 @@ extension LocationsPreviewView  {
                     .resizable()
                 
                     .scaledToFill()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 80, height: 80)
                     .cornerRadius(20)
             }
         }
-        .padding(6)
+        .padding(4)
         
         .background(Color.white)
-        .cornerRadius(26)
+        .cornerRadius(24)
         
         .onTapGesture {
             vm.showNextLocation(location: location)
@@ -77,7 +77,7 @@ extension LocationsPreviewView  {
     private var previewTitle: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(location.name)
-                .font(.title2)
+                .font(.title3)
                 .fontWeight(.bold)
             
             Text(location.cityName)
@@ -93,7 +93,7 @@ extension LocationsPreviewView  {
         } label: {
             Text("Learn More")
                 .font(.footnote)
-                .padding(4)
+                //.padding(4)
                 .frame(width: 85)
                 
         }
@@ -145,8 +145,8 @@ extension LocationsPreviewView  {
         } label: {
            
             Image(systemName: "chevron.right")
-                .font(.footnote)
-                .padding(4)
+                .font(.caption)
+                //.padding(4)
                 //.frame(width: 125)
         }
         .buttonStyle(.bordered)
@@ -155,9 +155,9 @@ extension LocationsPreviewView  {
 }
 
 
-#Preview {
-    ZStack {
-        Color.blue.ignoresSafeArea()
-        LocationsPreviewView(location: LocationsDataService.locations.first!).padding()
-    }.environmentObject(LocationsViewModel())
-}
+//#Preview {
+//    ZStack {
+//        Color.blue.ignoresSafeArea()
+//        LocationsPreviewView(location: LocationsDataService.locations.first!).padding()
+//    }.environmentObject(LocationsViewModel())
+//}

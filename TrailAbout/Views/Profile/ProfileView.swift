@@ -82,6 +82,7 @@ struct ProfileView: View {
     func logOutUser() {
         try? Auth.auth().signOut()
         logStatus = false
+        
     }
     
     func deleteAccount() {

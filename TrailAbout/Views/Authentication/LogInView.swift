@@ -116,6 +116,8 @@ struct LogInView: View {
         guard let userID = Auth.auth().currentUser?.uid else {return}
         let user =  try await  Firestore.firestore().collection("Users").document(userID).getDocument(as: User.self)
         
+        //print(user)
+        
         print("tAG ALONG")
         
         await MainActor.run(body: {

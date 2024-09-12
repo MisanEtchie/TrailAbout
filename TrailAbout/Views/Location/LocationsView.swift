@@ -37,13 +37,6 @@ struct LocationsView: View {
 
 
 
-
-
-
-
-
-
-
 #Preview {
     LocationsView().environmentObject(LocationsViewModel())
     
@@ -66,13 +59,13 @@ extension LocationsView {
         
         Map(coordinateRegion: $vm.mapRegion, annotationItems:  vm.locations, annotationContent: { location in
             
-            MapAnnotation(coordinate: location.coordinates) {
+            MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)) {
                 
                 
                 let range = (vm.zoomLevelForDisplay * 0.1)
                 
-                if location != vm.mapLocation && abs(location.coordinates.latitude - vm.mapLocation.coordinates.latitude) < range &&
-                    abs(location.coordinates.longitude - vm.mapLocation.coordinates.longitude) < range {
+                if location != vm.mapLocation && abs(location.latitude - vm.mapLocation.latitude) < range &&
+                    abs(location.longitude - vm.mapLocation.longitude) < range {
                     EmptyView()
                 } else if (vm.zoomLevelForDisplay > 70 && vm.mapLocation != location) {
                     
@@ -137,7 +130,7 @@ extension LocationsView {
                 
                 
                 Text(vm.mapLocation.name + ", " + vm.mapLocation.cityName)
-                    .font(.body)
+                    .font(.footnote)
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
                     .padding(.horizontal, 12)
@@ -147,7 +140,7 @@ extension LocationsView {
                     .frame(maxWidth: .infinity)
                     .overlay(alignment: .leading) {
                         Image(systemName: "chevron.down")
-                            .padding().font(.headline)
+                            .padding().font(.footnote)
                             .foregroundColor(.primary)
                             .rotationEffect(Angle(degrees: vm.showLocationsList ? 180 : 0))
                         

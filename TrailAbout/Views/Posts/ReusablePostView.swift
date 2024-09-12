@@ -32,13 +32,17 @@ struct ReusablePostView: View {
                     if posts.isEmpty {
                         Text(
                             basedOnLocation ?
-                            "No posts in this location\n\nBe the first!" : 
+                            "No posts in this location\n\nBe the first!" :
                                 basedOnUUID ? "No posts" :
                                 "No posts found"
                         )
-                            .foregroundStyle(.gray)
+                        .foregroundStyle(.gray)
                     } else {
-                        Posts()
+                        VStack {
+                            
+                            
+                            Posts()
+                        }
                     }
                 }
             }
@@ -84,7 +88,7 @@ struct ReusablePostView: View {
             Divider()
                 .padding(.horizontal, 15)
                 .padding(.bottom)
-
+            
         }
     }
     
@@ -114,16 +118,22 @@ struct ReusablePostView: View {
             }
             
             
+            
             let docs = try await query.getDocuments()
+            
+            
             
             let fetchedPosts = docs.documents.compactMap { doc -> Post? in
                 try? doc.data(as: Post.self)
             }
+            
+            print(fetchedPosts)
             await MainActor.run(body: {
                 posts.append(contentsOf: fetchedPosts )
                 paginationDoc = docs.documents.last
                 isFetching = false
             })
+            print(posts)
         } catch {
             print(error.localizedDescription)
         }
@@ -131,6 +141,56 @@ struct ReusablePostView: View {
     
     
 }
+
+//extension ReusablePostView {
+//    private var userStats: some View {
+//        HStack {
+//            
+//            let totalLikes = posts.reduce(0) { result, post in
+//                result + post.likedIDs.count
+//            }
+//            
+//            let uniquePlaces = Set(posts.map { post in
+//                post.locationName
+//            }).count
+//            
+//            
+//            VStack{
+//                Text(String(uniquePlaces))
+//                    .font(.title)
+//                    .fontWeight(.heavy)
+//                
+//                Text("Places")
+//                    .font(.subheadline)
+//            }
+//                .font(.footnote)
+//                .fontWeight(.medium)
+//                .padding(.vertical, 8)
+//                .frame(maxWidth: .infinity)
+//            //.background(Color("AccentColor"))
+//                .foregroundColor(Color("InverseColor"))
+//                .background(.ultraThinMaterial)
+//                .cornerRadius(20)
+//            
+//            VStack{
+//                Text(String(totalLikes))
+//                font(.title)
+//                .fontWeight(.heavy)
+//                
+//                Text("Likes")
+//                    .font(.subheadline)
+//            }
+//                .font(.footnote)
+//                .fontWeight(.medium)
+//                .padding(.vertical, 8)
+//                .frame(maxWidth: .infinity)
+//            //.background(Color("AccentColor"))
+//                .foregroundColor(Color("InverseColor"))
+//                .background(.ultraThinMaterial)
+//                .cornerRadius(20)
+//        }
+//    }
+//}
 
 #Preview {
     MainView()

@@ -166,14 +166,14 @@ extension LocationsDetailsView {
     private var mapDetail: some View {
         
         Map(coordinateRegion: .constant(MKCoordinateRegion(
-            center: location.coordinates,
+            center: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude),
             span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))),
             
             annotationItems: [location]
         ) {
             location in
             
-            MapAnnotation(coordinate: location.coordinates) { LocationMapAnnotationView(location: location).scaleEffect(0.6)}
+            MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)) { LocationMapAnnotationView(location: location).scaleEffect(0.6)}
         }
         .allowsHitTesting(false)
         .frame(width: 100, height: 100)
@@ -200,8 +200,8 @@ extension LocationsDetailsView {
 }
 
 
-#Preview {
-    LocationsDetailsView(location: LocationsDataService.locations[2]).environmentObject(LocationsViewModel())
-}
+//#Preview {
+//    LocationsDetailsView(location: LocationsDataService.locations[2]).environmentObject(LocationsViewModel())
+//}
 
 

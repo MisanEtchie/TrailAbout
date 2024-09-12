@@ -11,7 +11,7 @@ import Firebase
 @main
 struct TrailAboutApp: App {
     
-    @StateObject private var vm = LocationsViewModel()
+    //@StateObject private var vm = LocationsViewModel()
     @AppStorage("log_status") var logStatus: Bool = false
     
     init() {

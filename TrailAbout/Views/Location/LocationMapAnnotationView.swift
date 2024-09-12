@@ -53,6 +53,6 @@ struct LocationMapAnnotationView: View {
     }
 }
 
-#Preview {
-    LocationMapAnnotationView(location: LocationsDataService.locations.first!)//.environmentObject(LocationsViewModel())
-}
+//#Preview {
+//    LocationMapAnnotationView(location: LocationsDataService.locations.first!)//.environmentObject(LocationsViewModel())
+//}
