@@ -19,6 +19,17 @@ struct FeedView: View {
                 ReusablePostView(posts: $vm.recentPosts)
                 
             }
+            .toolbar(content: {
+                ToolbarItem (placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        SearchUserView()
+                    } label : {
+                        Image(systemName: "magnifyingglass")
+                            .tint(.black)
+                            
+                    }
+                }
+            })
             .navigationTitle("Feed")
         }
         

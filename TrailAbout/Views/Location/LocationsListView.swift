@@ -20,7 +20,7 @@ struct LocationsListView: View {
                 } label: {
                     listRowView(location: location)
                 }
-                .padding(.vertical, 4)
+                .padding(.vertical, 6)
                 .listRowBackground(Color.clear)
 
                

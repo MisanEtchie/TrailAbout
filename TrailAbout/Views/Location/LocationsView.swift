@@ -32,6 +32,9 @@ struct LocationsView: View {
                 vm.recentPosts.insert(post, at: 0 )
             }, location: vm.mapLocation, selectedStatus: vm.status)
         }
+        .sheet(isPresented: $vm.showLocationsSearch) {
+            SearchLocationView()
+        }
     }
 }
 
@@ -62,25 +65,37 @@ extension LocationsView {
             MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)) {
                 
                 
-                let range = (vm.zoomLevelForDisplay * 0.1)
+                let range = (vm.zoomLevelForDisplay * 0.05)
                 
                 if location != vm.mapLocation && abs(location.latitude - vm.mapLocation.latitude) < range &&
                     abs(location.longitude - vm.mapLocation.longitude) < range {
                     EmptyView()
-                } else if (vm.zoomLevelForDisplay > 70 && vm.mapLocation != location) {
+                } 
+                
+                else if (vm.zoomLevelForDisplay > 70 && vm.mapLocation != location) {
                     
-                    EmptyView()
+                    //EmptyView()
+                    
+                    Text("•").fontWeight(.bold)
+                        .foregroundColor(Color("AccentColor"))
+                    
                     
                 } else {
                     
                     LocationMapAnnotationView(location: location)
                         .scaleEffect(
+                            
+                            
                             vm.mapLocation == location
                             ?
-                            1.0
+                            
+                                (vm.zoomLevelForDisplay < 10) ?
+                             1.0 :
+                                
+                                0.7
                             :
                                 (vm.zoomLevelForDisplay < 10) ?
-                            0.7 : 0.4
+                            0.7 :   (vm.zoomLevelForDisplay < 50) ? 0.4 : 0.2
                         )
                         .onTapGesture {
                             vm.showNextLocation(location: location)
@@ -128,23 +143,53 @@ extension LocationsView {
         VStack {
             Button(action: vm.toggleLocationsList) {
                 
-                
                 Text(vm.mapLocation.name + ", " + vm.mapLocation.cityName)
-                    .font(.footnote)
-                    .fontWeight(.bold)
-                    .foregroundColor(.primary)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 12)
-                    .animation(.none, value: vm.mapLocation )
-                //.frame(height: 55)
-                    .frame(maxWidth: .infinity)
-                    .overlay(alignment: .leading) {
-                        Image(systemName: "chevron.down")
-                            .padding().font(.footnote)
+                    .frame(maxWidth: UIScreen.main.bounds.width * 0.75)
+                            .font(.footnote)
+                            .fontWeight(.bold)
                             .foregroundColor(.primary)
-                            .rotationEffect(Angle(degrees: vm.showLocationsList ? 180 : 0))
-                        
-                    }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 12)
+                            .lineLimit(1) // Limit text to one line
+                            .truncationMode(.tail) // Truncate with an ellipsis at the end
+                            .animation(.none, value: vm.mapLocation)
+                            .frame(maxWidth: .infinity)
+                            .overlay(alignment: .leading) {
+                                Image(systemName: "chevron.down")
+                                    .padding()
+                                    .bold()
+                                    .font(.footnote)
+                                    .foregroundColor(.primary)
+                                    .rotationEffect(Angle(degrees: vm.showLocationsList ? 180 : 0))
+                            }
+                            .overlay(alignment: .trailing) {
+                                Button(action: vm.toggleLocationsSearch) {
+                                    Image(systemName: "magnifyingglass")
+                                        .padding()
+                                        .bold()
+                                        .font(.footnote)
+                                        .foregroundColor(.primary)
+                                }
+                            }
+                
+//                Text(vm.mapLocation.name + ", " + vm.mapLocation.cityName)
+//                    .font(.footnote)
+//                    .fontWeight(.bold)
+//                    .foregroundColor(.primary)
+//                    .padding(.horizontal, 12)
+//                    .padding(.vertical, 12)
+//                    .lineLimit(1) // Limit text to one line
+//                    .truncationMode(.tail)
+//                    .animation(.none, value: vm.mapLocation )
+//                //.frame(height: 55)
+//                    .frame(maxWidth: .infinity)
+//                    .overlay(alignment: .leading) {
+//                        Image(systemName: "chevron.down")
+//                            .padding().font(.footnote)
+//                            .foregroundColor(.primary)
+//                            .rotationEffect(Angle(degrees: vm.showLocationsList ? 180 : 0))
+//                        
+//                    }
             }
             
             

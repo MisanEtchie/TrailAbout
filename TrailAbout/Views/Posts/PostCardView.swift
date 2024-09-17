@@ -3,7 +3,7 @@
 //  TrailAbout
 //
 //  Created by Misan on 9/6/24.
-//
+//v
 
 import SwiftUI
 import FirebaseFirestore
@@ -12,6 +12,7 @@ import FirebaseStorage
 
 struct PostCardView: View {
     var post: Post
+    @EnvironmentObject private var vm: LocationsViewModel
     
     @AppStorage("user_UID") private var userUID: String = ""
     @State private var docListener: ListenerRegistration?
@@ -24,7 +25,7 @@ struct PostCardView: View {
             WebImage(url: post.userProfileURL)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 35, height: 35)
+                .frame(width: 45, height: 45)
                 .clipShape(Circle())
             
             
@@ -41,23 +42,22 @@ struct PostCardView: View {
                     
                 }
                 
-                locationTag
-               
-                
-                
+                Button {
+                    vm.sheetLocation = vm.locations.first { $0.name == post.locationName }
+                    
+                } label: {locationTag}
                 
                 if let postImageURL = post.imageURL {
-                    GeometryReader {
-                        let size = $0.size
-                        WebImage(url: postImageURL)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: size.width, height: size.height)
-                            .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-                    }
-                    .frame(height: 300)
-                    .padding(.bottom, 4)
+                    
+                    WebImage(url: postImageURL)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(maxWidth: .infinity) // Take up all available width
+                        .frame(minWidth: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .padding(.bottom, 4)
                 }
+
                 
                     
                 

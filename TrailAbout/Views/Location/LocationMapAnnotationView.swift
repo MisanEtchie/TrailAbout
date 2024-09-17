@@ -45,6 +45,8 @@ struct LocationMapAnnotationView: View {
                 .rotationEffect(Angle(degrees: 180))
                 .offset(y: -3)
                 .padding(.bottom, 70)
+            
+            
                 
                 
             

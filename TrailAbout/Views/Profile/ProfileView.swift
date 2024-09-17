@@ -13,7 +13,7 @@ import FirebaseFirestore
 struct ProfileView: View {
     @State private var myProfile: User?
     @AppStorage("log_status") var logStatus: Bool = false
-    
+    @EnvironmentObject private var vm: LocationsViewModel
     @State var showError: Bool = false
     @State var errorMessage: String = ""
     @State var isLoading: Bool = false
@@ -26,7 +26,7 @@ struct ProfileView: View {
                     
                         .refreshable {
                             self.myProfile = nil
-                            await fetchUserData()
+                            await refreshUserData()
                         }
                         
                 }
@@ -36,7 +36,7 @@ struct ProfileView: View {
             }
             .refreshable {
                 myProfile = nil
-                await fetchUserData()
+                await refreshUserData()
             }
             
             .navigationTitle("My Profile")
@@ -65,9 +65,19 @@ struct ProfileView: View {
         }
         .task {
             if myProfile != nil {return}
-            await fetchUserData()
+            await refreshUserData()
+        }
+        .onAppear{
+            Task {
+                await refreshUserData()
+            }
         }
     }
+    
+    func refreshUserData() async {
+            myProfile = nil // Clear current profile data
+            await fetchUserData() // Fetch new user data
+        }
     
     func fetchUserData() async {
         guard let userUID = Auth.auth().currentUser?.uid else {return}

@@ -36,7 +36,7 @@ struct MainView: View {
                 .tag(Tab.locations)
             
             ProfileView()
-                
+                .environmentObject(vm)
                 .tabItem {
                     Image(systemName: selectedTab == .account ? "person.circle.fill" : "person.circle")
                         

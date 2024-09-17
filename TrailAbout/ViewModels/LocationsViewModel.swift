@@ -27,6 +27,8 @@ class LocationsViewModel: ObservableObject {
     
     @Published var showLocationsList: Bool = false
     
+    @Published var showLocationsSearch: Bool = false
+    
     @Published var sheetLocation: Location? = nil
     
     @Published var createNewPost: Bool = false
@@ -156,6 +158,12 @@ class LocationsViewModel: ObservableObject {
     func toggleLocationsList() {
         withAnimation(.easeInOut) {
             showLocationsList = !showLocationsList
+        }
+    }
+    
+    func toggleLocationsSearch() {
+        withAnimation(.easeInOut) {
+            showLocationsSearch = !showLocationsSearch
         }
     }
     
