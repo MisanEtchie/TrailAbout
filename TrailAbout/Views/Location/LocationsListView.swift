@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct LocationsListView: View {
     
@@ -41,16 +42,16 @@ extension LocationsListView {
     private func listRowView (location: Location) -> some View {
         HStack{
             if let imageName = location.imageNames.first {
-                Image(imageName)
+                WebImage(url: URL(string: imageName))
                     .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
+                    .scaledToFill()
+                    .frame(width: 45, height: 45)
                     .cornerRadius(7)
             }
             
             VStack (alignment: .leading) {
-                Text(location.name).font(.footnote)
-                Text(location.cityName).font(.caption2)
+                Text(location.name).font(.callout)
+                Text(location.cityName).font(.footnote)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
                 //.background(Color.red)

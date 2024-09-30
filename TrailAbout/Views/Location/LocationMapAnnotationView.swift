@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct LocationMapAnnotationView: View {
     
@@ -18,12 +19,25 @@ struct LocationMapAnnotationView: View {
     var body: some View {
         VStack (spacing: 0) {
             
-            if let imageName = location.imageNames[1] ?? location.imageNames.first
+//            if let imageName = location.imageNames[1] ?? location.imageNames.first {
+//                
+//                WebImage(url: URL(string: imageName))
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(width: 45, height: 45)
+//                    .cornerRadius(12)
+//                    .font(.headline)
+//                    .foregroundColor(.white)
+//                    .padding(3)
+//                    .background(accentColor)
+//                    .cornerRadius(15)
+//            }
+            
+            if let imageName = location.imageNames.first //(location.imageNames.count > 1 ? location.imageNames[1] : location.imageNames.first) 
             {
-                Image(imageName//systemName: "map.circle.fill"
-                )
+                WebImage(url: URL(string: imageName))
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
                     .frame(width: 45, height: 45)
                     .cornerRadius(12)
                     .font(.headline)
@@ -32,6 +46,22 @@ struct LocationMapAnnotationView: View {
                     .background(accentColor)
                     .cornerRadius(15)
             }
+
+            
+//            if let imageName = location.imageNames[1] ?? location.imageNames.first
+//            {
+//                Image(imageName//systemName: "map.circle.fill"
+//                )
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(width: 45, height: 45)
+//                    .cornerRadius(12)
+//                    .font(.headline)
+//                    .foregroundColor(.white)
+//                    .padding(3)
+//                    .background(accentColor)
+//                    .cornerRadius(15)
+//            }
             
             
             

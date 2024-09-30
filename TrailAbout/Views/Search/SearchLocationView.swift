@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct SearchLocationView: View {
     @EnvironmentObject var vm: LocationsViewModel
@@ -88,12 +89,13 @@ struct SearchLocationView: View {
 extension SearchLocationView {
     private func listRowView (location: Location) -> some View {
         HStack{
-            if let imageName = location.imageNames.first {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 45, height: 45)
-                    .cornerRadius(7)
+           
+                if let imageName = location.imageNames.first {
+                    WebImage(url: URL(string: imageName))
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 45, height: 45)
+                        .cornerRadius(7)
             }
             
             VStack (alignment: .leading) {

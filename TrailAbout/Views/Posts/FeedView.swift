@@ -16,7 +16,7 @@ struct FeedView: View {
     var body: some View {
         NavigationStack {
             VStack{
-                ReusablePostView(posts: $vm.recentPosts)
+                ReusablePostView(posts: $vm.recentPosts, showProfileLink: true)
                 
             }
             .toolbar(content: {

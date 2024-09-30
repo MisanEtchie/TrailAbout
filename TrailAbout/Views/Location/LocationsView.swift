@@ -18,9 +18,7 @@ struct LocationsView: View {
     
     var body: some View {
         ZStack{
-            mapLayer
-            
-                .ignoresSafeArea()
+            mapLayer.ignoresSafeArea()
             
             locationsPreviewStack
         }

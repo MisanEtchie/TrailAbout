@@ -19,6 +19,8 @@ struct ReusablePostView: View {
     var basedOnUUID: Bool = false
     var uuID: String?
     
+    var showProfileLink: Bool = false
+    
     @State private var isFetching: Bool = true
     @State private var paginationDoc: QueryDocumentSnapshot?
     //
@@ -36,6 +38,8 @@ struct ReusablePostView: View {
                                 basedOnUUID ? "No posts" :
                                 "No posts found"
                         )
+                        .multilineTextAlignment(.center)
+                        
                         .foregroundStyle(.gray)
                     } else {
                         VStack {
@@ -65,7 +69,7 @@ struct ReusablePostView: View {
     @ViewBuilder
     func Posts() -> some View {
         ForEach(posts) { post in
-            PostCardView (post: post) { updatedPost in
+            PostCardView (post: post, showProfileLink: showProfileLink) { updatedPost in
                 
                 if let index = posts.firstIndex(where: { post in
                     post.id == updatedPost.id

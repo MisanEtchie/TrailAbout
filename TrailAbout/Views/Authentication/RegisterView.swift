@@ -40,8 +40,16 @@ struct RegisterView: View {
     
     var body: some View {
         ViewThatFits {
-            ScrollView(.vertical, showsIndicators: false) {
-                registerBody
+            ZStack {
+                Image("RegisterTA") // Replace with the image name in your assets
+                            .resizable()
+                            .scaledToFit() // Ensures the image fills the screen
+                            .ignoresSafeArea()
+                            .vAlign(.top)
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    registerBody
+                }
             }
             //registerBody
         }
@@ -191,10 +199,10 @@ extension RegisterView {
             .padding(.top, 24)
             
             HStack() {
-                Text("Don't have an account")
+                Text("Have an accoun?t")
                     .foregroundColor(.gray)
                 
-                Button("Register Now")
+                Button("Sign In")
                 {dismiss()}
                     .fontWeight(.bold)
                     .foregroundColor(.primary)

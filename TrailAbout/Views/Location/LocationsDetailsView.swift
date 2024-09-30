@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import SDWebImageSwiftUI
 
 struct LocationsDetailsView: View {
     
@@ -74,7 +75,9 @@ extension LocationsDetailsView {
     private var detailsImage: some View {
         TabView {
             ForEach(location.imageNames , id: \.self) {
-                Image($0)
+                //Image($0)
+                
+                WebImage(url: URL(string:$0))
                     .resizable()
                     .scaledToFill()
                     .frame(width: UIScreen.main.bounds.width)

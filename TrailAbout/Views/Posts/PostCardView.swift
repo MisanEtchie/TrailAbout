@@ -13,20 +13,36 @@ import FirebaseStorage
 struct PostCardView: View {
     var post: Post
     @EnvironmentObject private var vm: LocationsViewModel
+    var showProfileLink: Bool = false
+    
     
     @AppStorage("user_UID") private var userUID: String = ""
     @State private var docListener: ListenerRegistration?
+    
+    @State private var fetchedUser: User? = nil
     
     var onUpdate: (Post) -> ()
     var onDelete: () -> ()
     var body: some View {
         HStack (alignment: .top, spacing: 10) {
             
-            WebImage(url: post.userProfileURL)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 45, height: 45)
-                .clipShape(Circle())
+            if let user = fetchedUser, showProfileLink {
+                            NavigationLink(destination: ReusableProfileView(user: user)) {
+                                WebImage(url: post.userProfileURL)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 45, height: 45)
+                                    .clipShape(Circle())
+                            }
+                        } else {
+                            // Placeholder if user isn't fetched yet
+                            WebImage(url: post.userProfileURL)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 45, height: 45)
+                                .clipShape(Circle())
+                        }
+                        
             
             
             
@@ -48,6 +64,8 @@ struct PostCardView: View {
                 } label: {locationTag}
                 
                 if let postImageURL = post.imageURL {
+                    
+                    
                     
                     WebImage(url: postImageURL)
                         .resizable()
@@ -114,6 +132,7 @@ struct PostCardView: View {
                     }
                 })
             }
+            fetchUser()
         }
         .onDisappear {
             if let docListener {
@@ -122,6 +141,23 @@ struct PostCardView: View {
             }
         }
     }
+    
+    func fetchUser() {
+            Task {
+                do {
+                    let documents = try await Firestore.firestore().collection("Users")
+                        .whereField("userUID", isEqualTo: post.userUID)
+                        .getDocuments()
+                    if let user = try documents.documents.compactMap({ try? $0.data(as: User.self) }).first {
+                        await MainActor.run {
+                            fetchedUser = user
+                        }
+                    }
+                } catch {
+                    print("Error fetching user: \(error)")
+                }
+            }
+        }
     
     func likePost () {
         Task {

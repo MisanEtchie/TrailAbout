@@ -21,11 +21,7 @@ struct TrailAboutApp: App {
     var body: some Scene {
         WindowGroup {
             
-            if logStatus {
-                MainView()
-            } else {
-                LogInView()
-            }
+            ViewCoordinator()
             
             //ContentView()
             //LogInView()

@@ -10,6 +10,7 @@ import PhotosUI
 import Firebase
 import FirebaseStorage
 import FirebaseFirestore 
+import SDWebImageSwiftUI
 
 struct CreateNewPost: View {
     var onPost: (Post) -> ()
@@ -79,6 +80,9 @@ struct CreateNewPost: View {
                         .padding(.top, 18)
                     
                     statusButtons
+                        .padding(.bottom, 18)
+                    
+                    
                     
                     addPostBody
                     
@@ -197,11 +201,11 @@ extension CreateNewPost {
             ZStack{
                 if let imageName = location.imageNames.first
                 {
-                    Image(imageName)
+                    WebImage(url: URL(string: imageName))
                         .resizable()
                     
                         .scaledToFill()
-                        .frame(width: 100, height: 100)
+                        .frame(width: 80, height: 80)
                         .cornerRadius(20)
                 }
             }
@@ -314,13 +318,32 @@ extension CreateNewPost {
                         selectedStatus = .visited
                     }) {
                         Text("🤩 Visited")
+                            .font(.footnote)
                             .fontWeight(.medium)
-                            .padding(.vertical, 12)
+                            .padding(.vertical, 8)
                             .frame(maxWidth: .infinity)
                             .background(selectedStatus == .visited ? Color("AccentColor") : Color.gray.opacity(0.2))
                             .foregroundColor(selectedStatus == .visited ? .white : .black)
                             .cornerRadius(25)
                     }
+            
+            
+//            Button(action: {
+//                vm.createNewPost = true
+//                vm.status = .visited
+//            }) {
+//                Text("🤩 Visited")
+//                    .font(.footnote)
+//                    .fontWeight(.medium)
+//                    .padding(.vertical, 8)
+//                    .frame(maxWidth: .infinity)
+//                    //.background(Color("AccentColor"))
+//                    .foregroundColor(Color("InverseColor"))
+//                    .background(.ultraThinMaterial)
+//                    .cornerRadius(25)
+//            }
+            
+            
 
                     // "Wants to Go" Button
                     Button(action: {
@@ -328,8 +351,9 @@ extension CreateNewPost {
                         postImageData = nil
                     }) {
                         Text("🧳 Want to Go")
+                            .font(.footnote)
                             .fontWeight(.medium)
-                            .padding(12)
+                            .padding(.vertical, 8)
                             .frame(maxWidth: .infinity)
                             .background(selectedStatus == .wantsToGo ? Color.blue : Color.gray.opacity(0.2))
                             .foregroundColor(selectedStatus == .wantsToGo ? .white : Color("InverseColor"))

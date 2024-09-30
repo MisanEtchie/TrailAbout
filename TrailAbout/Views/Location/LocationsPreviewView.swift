@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct LocationsPreviewView: View {
     
@@ -54,9 +55,10 @@ struct LocationsPreviewView: View {
 extension LocationsPreviewView  {
     private var previewImage: some View {
         ZStack{
-            if let imageName = location.imageNames.first
+            if let  imageName = (location.imageNames.count > 1 ? location.imageNames[1] : location.imageNames.first)
             {
-                Image(imageName)
+                
+                WebImage(url: URL( string: imageName))
                     .resizable()
                 
                     .scaledToFill()

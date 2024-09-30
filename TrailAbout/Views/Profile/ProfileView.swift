@@ -90,6 +90,7 @@ struct ProfileView: View {
     }
     
     func logOutUser() {
+        self.myProfile = nil
         try? Auth.auth().signOut()
         logStatus = false
         
