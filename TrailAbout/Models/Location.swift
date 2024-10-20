@@ -16,8 +16,8 @@ struct Location: Identifiable, Codable, Equatable, Hashable {
     @DocumentID var id: String?
     var name: String
     var cityName: String
-    var region: String//RegionsOfTheWorld
-    var type: String//PlaceCategory
+    var region: String
+    var type: String
     var latitude: Double
     var longitude: Double
     var description: String

@@ -14,7 +14,9 @@ struct PostCardView: View {
     var post: Post
     @EnvironmentObject private var vm: LocationsViewModel
     var showProfileLink: Bool = false
-    
+    @State private var showReportReasonActionSheet = false
+    @State private var showReportAlert = false
+
     
     @AppStorage("user_UID") private var userUID: String = ""
     @State private var docListener: ListenerRegistration?
@@ -114,6 +116,32 @@ struct PostCardView: View {
                         .contentShape(Rectangle())
                 }
                 //.offset(x: 8)
+            } else {
+                
+                
+                
+                
+                Button {
+                    showReportReasonActionSheet = true
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .font(.caption)
+                        .foregroundColor(.black)
+                        .padding(8)
+                        .contentShape(Rectangle())
+                }
+                .actionSheet(isPresented: $showReportReasonActionSheet) {
+                    ActionSheet(
+                        title: Text("Post"),
+                        buttons: [
+                            .default(Text("Report Post")) { reportPost() },
+                            
+                            .cancel()
+                        ]
+                    )
+                }
+
+
             }
         })
         .onAppear {
@@ -140,7 +168,44 @@ struct PostCardView: View {
                 self.docListener = nil
             }
         }
+        .alert(isPresented: $showReportAlert) {
+            Alert(
+                title: Text("Report Submitted"),
+                message: Text("The post has been reported successfully."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+
     }
+    
+    func reportPost() {
+           let reportData: [String: Any] = [
+               "postID": post.id ?? "",
+               "reportedBy": userUID,
+               "timestamp": FieldValue.serverTimestamp(),
+              // "reason": reason // Pass the selected reason
+           ]
+           
+           Firestore.firestore().collection("Reports").addDocument(data: reportData) { error in
+               if let error = error {
+                   print("Error reporting post: \(error.localizedDescription)")
+               } else {
+                   showReportConfirmation()
+               }
+           }
+       }
+
+    func showReportConfirmation() {
+        print("Report successful")
+        showReportAlert = true
+    }
+
+    
+    
+    
+    
+    
+
     
     func fetchUser() {
             Task {
@@ -162,6 +227,8 @@ struct PostCardView: View {
     func likePost () {
         Task {
             guard let postID = post.id else  {return}
+            
+            
             if post.likedIDs.contains(userUID) {
                 try await Firestore.firestore().collection("Posts").document(postID).updateData([
                     "likedIDs": FieldValue.arrayRemove([userUID])

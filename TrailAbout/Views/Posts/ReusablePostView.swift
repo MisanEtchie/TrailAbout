@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
-
+import FirebaseAuth
 
 struct ReusablePostView: View {
     @Binding var posts: [Post]
@@ -24,6 +24,13 @@ struct ReusablePostView: View {
     @State private var isFetching: Bool = true
     @State private var paginationDoc: QueryDocumentSnapshot?
     //
+    
+    
+    @State private var blockedUsers: [String] = []
+    @State private var blockedByUsers: [String] = []
+
+
+    
     var body: some View {
         ScrollView (.vertical, showsIndicators: false) {
             LazyVStack{
@@ -96,7 +103,40 @@ struct ReusablePostView: View {
         }
     }
     
+    func fetchBlockedUsers() async {
+        guard let userUID = Auth.auth().currentUser?.uid else { return }
+        do {
+            let document = try await Firestore.firestore().collection("Users").document(userUID).getDocument()
+            if let userData = document.data(), let blockedUsers = userData["blockedUsers"] as? [String] {
+                self.blockedUsers = blockedUsers
+            } else {
+                self.blockedUsers = []
+            }
+        } catch {
+            print("Error fetching blocked users: \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchBlockedByUsers() async {
+        guard let userUID = Auth.auth().currentUser?.uid else { return }
+        do {
+            let document = try await Firestore.firestore().collection("Users").document(userUID).getDocument()
+            if let userData = document.data(), let blockedBy = userData["blockedBy"] as? [String] {
+                self.blockedByUsers = blockedBy
+            } else {
+                self.blockedByUsers = []
+            }
+        } catch {
+            print("Error fetching blockedBy users: \(error.localizedDescription)")
+        }
+    }
+
+
+    
     func fetchPosts() async {
+        await fetchBlockedUsers()
+        await fetchBlockedByUsers()
+        
         do {
             var query: Query!
             
@@ -127,17 +167,29 @@ struct ReusablePostView: View {
             
             
             
-            let fetchedPosts = docs.documents.compactMap { doc -> Post? in
+            var fetchedPosts = docs.documents.compactMap { doc -> Post? in
                 try? doc.data(as: Post.self)
             }
             
-            print(fetchedPosts)
+           
+                fetchedPosts = fetchedPosts.filter { post in
+                                !blockedUsers.contains(post.userUID)
+                            }
+            
+            fetchedPosts = fetchedPosts.filter { post in
+                            !blockedByUsers.contains(post.userUID)
+                        }
+                        
+
+                        //fetchedPosts.append(contentsOf: fetchedPosts)
+            
+            
             await MainActor.run(body: {
                 posts.append(contentsOf: fetchedPosts )
                 paginationDoc = docs.documents.last
                 isFetching = false
             })
-            print(posts)
+            
         } catch {
             print(error.localizedDescription)
         }

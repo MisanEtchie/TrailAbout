@@ -28,19 +28,16 @@ struct SearchLocationView: View {
                 if searchText.isEmpty {
                     // Group locations by region and display regions
                     List {
-                        ForEach(regions.keys.sorted(), id: \.self) { region in
-                            Section(header: Text(region)) {
-                                ForEach(regions[region] ?? []) { location in
-                                    Button(action: {
-                                        vm.showNextLocation(location: location)
-                                        vm.showLocationsSearch = false
-                                    }) {
-                                        listRowView(location: location)
-                                    }
+                            ForEach(vm.locations) { location in
+                                Button(action: {
+                                    vm.showNextLocation(location: location)
+                                    vm.showLocationsSearch = false
+                                }) {
+                                    listRowView(location: location)
                                 }
                             }
                         }
-                    }.listStyle(PlainListStyle())
+                        .listStyle(PlainListStyle())
                 } else {
                     
                     List {
@@ -79,7 +76,8 @@ struct SearchLocationView: View {
                 fetchedLocations = vm.locations.filter { location in
                     location.name.lowercased().contains(searchText.lowercased()) ||
                     location.cityName.lowercased().contains(searchText.lowercased()) ||
-                    location.description.lowercased().contains(searchText.lowercased())
+                    location.description.lowercased().contains(searchText.lowercased()) ||
+                    location.region.lowercased().contains(searchText.lowercased())
                 }
             })
         }

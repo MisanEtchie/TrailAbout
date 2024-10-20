@@ -17,6 +17,8 @@ struct ProfileView: View {
     @State var showError: Bool = false
     @State var errorMessage: String = ""
     @State var isLoading: Bool = false
+    @State private var showBlockedUsers = false
+
     
     var body: some View {
         NavigationStack {
@@ -43,6 +45,8 @@ struct ProfileView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
+                        
+                        Button("Blocked Users", action: { showBlockedUsers = true })
                         
                         Button ("Logout", action: logOutUser)
                         
@@ -72,6 +76,15 @@ struct ProfileView: View {
                 await refreshUserData()
             }
         }
+        .sheet(isPresented: $showBlockedUsers) {
+            
+                    if let myProfile {
+                        BlockUsersView(blockedUserUIDs: myProfile.blockedUsers ??
+                        [])
+                    } else {
+                        Text("Loading blocked users...")
+                    }
+                }
     }
     
     func refreshUserData() async {

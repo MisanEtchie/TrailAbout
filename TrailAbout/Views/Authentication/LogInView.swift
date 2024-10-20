@@ -30,6 +30,8 @@ struct LogInView: View {
     @AppStorage("user_name") var userNameStored : String = ""
     @AppStorage("user_UID") var userUID: String = ""
     
+    
+    
     var body: some View {
         ZStack {
             
