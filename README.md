@@ -6,6 +6,6 @@ TrailAbout is a social platform tailored for outdoor enthusiasts, explorers, tra
 
 |    |     |
 | ------------- | ------------- |
-|  ![English  en  | iPhone - 6 7  Display - 1](https://github.com/user-attachments/assets/1301493d-8f56-49f0-97ae-b3423840206e) | ![English  en  | iPhone - 6 7  Display - 2](https://github.com/user-attachments/assets/45bf78e0-8ca1-45db-ab6e-32846680771d) |
-| ![English  en  | iPhone - 6 7  Display - 3](https://github.com/user-attachments/assets/a07c9f36-f544-4634-adaa-abf71bb65722)  | ![English  en  | iPhone - 6 7  Display - 4](https://github.com/user-attachments/assets/d5e16c30-152a-4a91-82cd-578a260ca145)  |
-| ![English  en  | iPhone - 6 7  Display - 5](https://github.com/user-attachments/assets/2e2113d9-1868-4687-818c-b29045d664b7)  | ![English  en  | iPhone - 6 7  Display - 6](https://github.com/user-attachments/assets/44f95f21-bd6e-4f56-801b-20f91feb8025)  | 
+| ![IMG_8166 2](https://github.com/user-attachments/assets/f3ad7cc0-5b89-4843-b291-a60f32446e0d)  | ![IMG_8167 2](https://github.com/user-attachments/assets/a7e6ba08-205f-49c8-b086-9f92e0129de2) |
+| ![IMG_8168 2](https://github.com/user-attachments/assets/973da5bd-ae65-4ffa-aab6-1395b2c7a727)  |  ![IMG_8169 2](https://github.com/user-attachments/assets/b02d7562-4cf7-4edd-919a-9fa68d5605dd) |
+| ![IMG_8171 2](https://github.com/user-attachments/assets/c536fd6f-6cf4-4769-adf9-163783a86ad5)  | ![English  en  | ![IMG_8172 2](https://github.com/user-attachments/assets/8fd8fd7f-320b-4093-9848-8e8e457f9be6)  | 
