@@ -4,9 +4,8 @@ TrailAbout is a social platform tailored for outdoor enthusiasts, explorers, tra
 
 ## Screenshots
 
-|   ![English  en  | iPhone - 6 7  Display - 1](https://github.com/user-attachments/assets/66ad22a1-74d5-4de6-b94c-21a2ad00e224) |  ![English  en  | iPhone - 6 7  Display - 2](https://github.com/user-attachments/assets/7a338195-6ae7-4b8a-a8fb-fa0ec84aad86)   |
+|    |     |
 | ------------- | ------------- |
-|   | ![IMG_8787](https://github.com/user-attachments/assets/53835aea-a605-4ceb-882e-a05c53bfbd9c) |
-|  ![IMG_8810](https://github.com/user-attachments/assets/66e0784e-79e9-4a21-9266-a3e057c0c338) | ![IMG_8809](https://github.com/user-attachments/assets/ec40d4c1-b54a-4f0d-94f9-e6c8c8a00589)  |
-|![IMG_8808](https://github.com/user-attachments/assets/e5e8a6ff-3b77-4f58-b84a-a7968947fc1e)   |   | 
-
+|  ![English  en  | iPhone - 6 7  Display - 1](https://github.com/user-attachments/assets/1301493d-8f56-49f0-97ae-b3423840206e) | ![English  en  | iPhone - 6 7  Display - 2](https://github.com/user-attachments/assets/45bf78e0-8ca1-45db-ab6e-32846680771d) |
+| ![English  en  | iPhone - 6 7  Display - 3](https://github.com/user-attachments/assets/a07c9f36-f544-4634-adaa-abf71bb65722)  | ![English  en  | iPhone - 6 7  Display - 4](https://github.com/user-attachments/assets/d5e16c30-152a-4a91-82cd-578a260ca145)  |
+| ![English  en  | iPhone - 6 7  Display - 5](https://github.com/user-attachments/assets/2e2113d9-1868-4687-818c-b29045d664b7)  | ![English  en  | iPhone - 6 7  Display - 6](https://github.com/user-attachments/assets/44f95f21-bd6e-4f56-801b-20f91feb8025)  | 
